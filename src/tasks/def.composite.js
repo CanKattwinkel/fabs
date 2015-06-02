@@ -125,8 +125,10 @@ var compileTask = [].concat(
   utils.includeIf('ngAnnotate', config.build.ngAnnotate.enabled),
   'concat:compile_js',
   'uglify:compile',
+    'fixSourceMaps',
 
-  'processHtml:compile',
+
+    'processHtml:compile',
   'htmlmin:compile_index',
 
   'hookCacheBustingStart',

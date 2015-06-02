@@ -85,6 +85,28 @@ var processHtmlTask = function () {
   });
 };
 
+
+grunt.registerMultiTask('fixSourceMaps', function () {
+    this.files.forEach(function (f) {
+        var result;
+        var sources = f.src.filter(function (filepath) {
+            if (!grunt.file.exists(filepath)) {
+                grunt.log.warn('Source file "' + filepath + '" not found.');
+                return false;
+            } else {
+                return true;
+            }
+        }).forEach(function (filepath) {
+            var base = path.dirname(filepath);
+            var sMap = grunt.file.readJSON(filepath);
+            sMap.sources = ['main.js'];
+            grunt.file.write(filepath, JSON.stringify(sMap));
+            // Print a success message.
+            grunt.log.writeln('File "' + filepath + '" fixed.');
+        });
+    });
+});
+
 grunt.registerMultiTask('processHtml', 'Process html pages (not templates but entry pages)', processHtmlTask);
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
