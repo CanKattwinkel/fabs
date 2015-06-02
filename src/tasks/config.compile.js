@@ -79,24 +79,40 @@ var compileTasksConfig = {
      * code and all specified vendor source code into a single file.
      */
     compile_js: {
-      options: {
-        outRelative: 'main.min.js',
-        out: config.build.compile.outdir + '/<%= concat.compile_js.options.outRelative %>'
-      },
-      files: [{
-        nosort: true,
-        src: (function () {
-          return [].concat(
-            config.vendor.files.js.map(utils.addCwdToPattern('<%= copy.prepare_vendor_js.options.out %>')),
-            path.normalize(__dirname + './../snippets/module.prefix'),
-            config.app.files.js.map(utils.addCwdToPattern('<%= copy.prepare_app_js.options.out %>')),
-            '<%= html2js.compile_templates.options.out %>',
-            '<%= translations2js.prepare.options.out %>',
-            path.normalize(__dirname + './../snippets/module.suffix')
-          );
-        })(),
-        dest: '<%= concat.compile_js.options.out %>'
-      }]
+        options: {
+            outRelative: 'main.min.js',
+            out: config.build.compile.outdir + '/<%= concat.compile_js.options.outRelative %>',
+            outUnminRelative: 'main.js',
+            outUnmin: config.build.compile.outdir + '/<%= concat.compile_js.options.outUnminRelative %>'
+        },
+        files: [{
+            nosort: true,
+            src: (function () {
+                return [].concat(
+                    config.vendor.files.js.map(utils.addCwdToPattern('<%= copy.prepare_vendor_js.options.out %>')),
+                    path.normalize(__dirname + './../snippets/module.prefix'),
+                    config.app.files.js.map(utils.addCwdToPattern('<%= copy.prepare_app_js.options.out %>')),
+                    '<%= html2js.compile_templates.options.out %>',
+                    '<%= translations2js.prepare.options.out %>',
+                    path.normalize(__dirname + './../snippets/module.suffix')
+                );
+            })(),
+            dest: '<%= concat.compile_js.options.out %>'
+        },
+            {
+                nosort: true,
+                src: (function () {
+                    return [].concat(
+                        config.vendor.files.js.map(utils.addCwdToPattern('<%= copy.prepare_vendor_js.options.out %>')),
+                        path.normalize(__dirname + './../snippets/module.prefix'),
+                        config.app.files.js.map(utils.addCwdToPattern('<%= copy.prepare_app_js.options.out %>')),
+                        '<%= html2js.compile_templates.options.out %>',
+                        '<%= translations2js.prepare.options.out %>',
+                        path.normalize(__dirname + './../snippets/module.suffix')
+                    );
+                })(),
+                dest: '<%= concat.compile_js.options.outUnmin %>'
+            }]
     }
   },
 
