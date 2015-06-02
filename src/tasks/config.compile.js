@@ -80,7 +80,7 @@ var compileTasksConfig = {
      */
     compile_js: {
       options: {
-        outRelative: 'main.js',
+        outRelative: 'main.min.js',
         out: config.build.compile.outdir + '/<%= concat.compile_js.options.outRelative %>'
       },
       files: [{
@@ -138,7 +138,10 @@ var compileTasksConfig = {
   uglify: {
     compile: {
       options: {
-        banner: '<%= meta.banner %>'
+        banner: '<%= meta.banner %>',
+        sourceMap: true,
+        sourceMapName: config.build.compile.outdir +'/main.map.js'
+
       },
       files: [{
         '<%= concat.compile_js.options.out %>': '<%= concat.compile_js.options.out %>'
@@ -245,7 +248,7 @@ var compileTasksConfig = {
           cwd: config.build.compile.outdir,
           src: [
             'index.html',
-            config.build.compile.cacheBustingDir + '/main.js'
+              config.build.compile.cacheBustingDir + '/main.min.js'
             /**
              * do not replace paths within main.css because they have to be relative to the css file,
              * which already is located under the cache busting dir
