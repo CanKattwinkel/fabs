@@ -155,8 +155,9 @@ var compileTasksConfig = {
     compile: {
       options: {
         banner: '<%= meta.banner %>',
-        sourceMap: true,
-        sourceMapName: config.build.compile.outdir +'/main.js.map'
+          sourceMap: true,
+          sourceMapIncludeSources: true,
+          sourceMapName: config.build.compile.outdir +'/main.js.map'
       },
       files: [{
         '<%= concat.compile_js.options.out %>': '<%= concat.compile_js.options.out %>'
